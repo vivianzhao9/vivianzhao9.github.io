@@ -10,8 +10,7 @@ var Card = (function(window, undefined) {
    */
   var SELECTORS = {
     container: '.card__container',
-    content: '.card__content',
-    clip: '.clip'
+    content: '.card__content'
   };
 
   /**
@@ -33,7 +32,6 @@ var Card = (function(window, undefined) {
 
     // Get elements.
     this._container = $(this._el).find(SELECTORS.container)[0];
-    this._clip = $(this._el).find(SELECTORS.clip)[0];
     this._content = $(this._el).find(SELECTORS.content)[0];
 
     this.isOpen = false;
@@ -50,17 +48,13 @@ var Card = (function(window, undefined) {
     this._TL = new TimelineLite;
 
     var slideContentDown = this._slideContentDown();
-    var clipImageIn = this._clipImageIn();
     var floatContainer = this._floatContainer(callback);
-    var clipImageOut = this._clipImageOut();
     var slideContentUp = this._slideContentUp();
 
     // Compose sequence and use duration to overlap tweens.
     this._TL.add(slideContentDown);
-    this._TL.add(clipImageIn, 0);
-    this._TL.add(floatContainer, '-=' + clipImageIn.duration() * 0.6);
-    this._TL.add(clipImageOut, '-=' + floatContainer.duration() * 0.3);
-    this._TL.add(slideContentUp, '-=' + clipImageOut.duration() * 0.6);
+    this._TL.add(floatContainer, 0);
+    this._TL.add(slideContentUp, '-=' + floatContainer.duration() * 0.6);
 
 
     this.isOpen = true;
